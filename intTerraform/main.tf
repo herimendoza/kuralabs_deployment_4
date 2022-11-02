@@ -24,6 +24,20 @@ resource "aws_instance" "web_server01" {
   
 }
 
+
+# create ec2 instance - priv
+resource "aws_instance" "web_server02" {
+  ami = "ami-08c40ec9ead489470"
+  instance_type = "t2.micro"
+  key_name = "deploy1_ssh"
+  vpc_security_group_ids = [aws_security_group.web_ssh.id]
+  subnet_id = aws_subnet.subnet402priv.id
+
+  tags = {
+    "Name" = "Webserver002"
+  }
+}
+
 # create vpc
 resource "aws_vpc" "deploy4VPC" {
     cidr_block = "172.27.0.0/16"
@@ -61,6 +75,43 @@ resource "aws_route_table" "route-table-deploy4" {
 resource "aws_route_table_association" "RTD4-assoc" {
     subnet_id = aws_subnet.subnet401pub.id
     route_table_id = aws_route_table.route-table-deploy4.id
+}
+
+# create private subnet
+resource "aws_subnet" "subnet402priv" {
+    cidr_block = "172.27.64.0/18"
+    vpc_id = aws_vpc.deploy4VPC.id
+    map_public_ip_on_launch = "false"
+    availability_zone = data.aws_availability_zones.available.names[0]
+}
+
+# create priv route table
+resource "aws_route_table" "route-table-priv-deploy4" {
+    vpc_id = aws_vpc.deploy4VPC.id
+
+    route {
+      cidr_block = "0.0.0.0/0"
+      nat_gateway_id = aws_nat_gateway.natg-deploy4.id
+    } 
+}
+# create priv route table assoc
+resource "aws_route_table_association" "RTA-sub402-priv" {
+    subnet_id = aws_subnet.subnet402priv.id
+    route_table_id = aws_route_table.route-table-priv-deploy4.id
+  
+}
+
+# create nat gateway
+resource "aws_nat_gateway" "natg-deploy4" {
+    allocation_id = aws_eip.nat-eip-deploy4.id
+    subnet_id = aws_subnet.subnet402priv.id
+  
+}
+
+# create elastic ip
+resource "aws_eip" "nat-eip-deploy4" {
+    vpc = true
+  
 }
 
 # data
