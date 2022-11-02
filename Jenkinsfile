@@ -59,7 +59,7 @@ pipeline {
          }
     }
    }
-     /*
+     
      stage('Destroy') {
        steps {
          withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')]) {
@@ -69,6 +69,14 @@ pipeline {
          }
        }
      }
-     */
+     
+  }
+  post{
+    always{
+      emailext to: "heri.mendoza9@gmail.com",
+      subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+      body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+      attachLog: true
+    }
   }
  }
