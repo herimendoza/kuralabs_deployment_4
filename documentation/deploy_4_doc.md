@@ -158,6 +158,8 @@ The only major issue that kept happening was that during a build, Jenkins would 
 
 The Terraform file created the infrastructure below. A VPC was created in AZ us-east-1a. Two subnets were created, one public and one private. The private subnet was not necessary for this deployment, it was just for practice. The Jenkins EC2 was placed in the public subnet and another EC2 in the private subnet. Because there were private and public subnets, two route tables were needed, a public route table connecting to the internet gateway, and the private route table connecting to the NAT gateway. In the EC2 resource block in the terraform file, a script is called as user data (meaning the script is ran as soon as the instance is created). This script installs git, pip, clones the repository with the source code, and finally, installs the required dependencies and gunicorn to run the application as a --daemon operation.
 
+[VPC Infrastructure Diagram](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/deploy4_infra.png)
+
 #### ***5. Improvements***
 
 To improve this pipeline and infrastructure:
@@ -167,3 +169,12 @@ To improve this pipeline and infrastructure:
 - The first point would further necessitate the creation of a bastion host in the public subnet (to allow ssh access to the private subnets and servers).
 
 - An application load balancer would be necessary to allow access to the frontend servers (assuming several frontend servers in different availability zones for redundancy).
+
+#### ***6. Diagrams and Images***
+
+[Jenkins Pipeline](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/deploy_4_pipeline.png)
+
+[Jenkins Builds](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/jenkins_builds.png)
+
+[Running Applicatio](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/application_instance.png)
+
