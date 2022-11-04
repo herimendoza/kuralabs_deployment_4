@@ -176,5 +176,5 @@ To improve this pipeline and infrastructure:
 
 [Jenkins Builds](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/jenkins_builds.png)
 
-[Running Applicatio](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/application_instance.png)
+[Running Application](https://github.com/herimendoza/kuralabs_deployment_4/blob/1d3fc422388dbd7dfdc301caa1feacc14532f276/documentation/images/application_instance.png)
 
